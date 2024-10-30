@@ -1,0 +1,13 @@
+.megamenu {
+  grid-template-columns: repeat(2, 1fr);
+
+  @media(min-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &--column {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(var(--megamenu-rows), 1fr);
+    grid-auto-flow: column;
+  }
+}

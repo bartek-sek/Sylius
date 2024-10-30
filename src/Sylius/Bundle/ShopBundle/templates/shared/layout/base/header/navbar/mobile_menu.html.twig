@@ -1,0 +1,65 @@
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNav" aria-labelledby="offcanvasNavLabel" aria-modal="true" role="dialog">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        {% if taxons|length > 0 %}
+            <div class="navbar">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    {% for taxon in taxons %}
+                        {% if taxon.enabledChildren|length > 0 %}
+                            <li class="nav-item dropdown position-static">
+                                <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">
+                                    {{ taxon.name }}
+                                </a>
+                                <div class="dropdown-menu w-100">
+                                    <div class="p-4">
+                                        <div class="row g-5">
+                                            {% for child in taxon.enabledChildren %}
+                                                <div class="col-12">
+                                                    <div class="h6 border-bottom mb-3 pb-2">{{ child.name }}</div>
+                                                    <div class="row">
+                                                        <div class="col-12 col-lg-6">
+                                                            <ul class="list-unstyled list-nav">
+                                                                {% for child in child.enabledChildren %}
+                                                                    <li><a href="{{ path('sylius_shop_product_index', {'slug': child.slug, '_locale': child.translation.locale}) }}">{{ child.name }}</a></li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('sylius_shop_product_index', {'slug': taxon.slug, '_locale': taxon.translation.locale}) }}">{{ taxon.name }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <hr>
+        <div class="navbar">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item fs-7">
+                    <a class="nav-link" href="#">Find a store</a>
+                </li>
+                <li class="nav-item fs-7">
+                    <a class="nav-link" href="#">Order status</a>
+                </li>
+                <li class="nav-item fs-7">
+                    <a class="nav-link" href="#">Returns</a>
+                </li>
+                <li class="nav-item fs-7">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
